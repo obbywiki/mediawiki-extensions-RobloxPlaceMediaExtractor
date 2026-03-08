@@ -24,7 +24,8 @@ Extracts Place Universe ID and Name automatically, then retrieves Game Icon and 
 
 # TODO
 
-- Add support for downloading multiple thumbnails at once
-- Add config for changing the download prefix
-- Add support for using the place name instead of the universe ID
-- Add support for different icon/thumbnail sizes
+* Add support for downloading multiple thumbnails at once
+* Add config for changing the download prefix
+* Add support for using the place name instead of the universe ID
+* Add support for different icon/thumbnail sizes
+* Use article path instead of defaulting to index.php?title=etc
