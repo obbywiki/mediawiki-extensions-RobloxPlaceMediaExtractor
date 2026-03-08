@@ -48,6 +48,7 @@
     background: var(--background-color-base, #fff);
     color: var(--color-base, inherit);
     font-size: 1em;
+    min-width: 300px;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 

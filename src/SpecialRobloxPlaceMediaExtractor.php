@@ -42,8 +42,8 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
         $introHtml .= Html::element( 'h2', [], 'How to Use the Roblox Media Extractor' );
         $introHtml .= Html::element( 'p', [], 'The Roblox Place Media Extractor allows you to quickly and consistently download high-resolution game icons and thumbnails directly from a Roblox place or universe. This tool is ideal for archiving game assets, analyzing high-quality Roblox imagery, or building wiki documentation. This tool was designed for the Obby Wiki.' );
         $introHtml .= Html::openElement( 'ul' );
-        $introHtml .= Html::element( 'li', [], 'Find the Place ID (located in the URL of any Roblox game page) or the Universe ID.' );
-        $introHtml .= Html::element( 'li', [], 'Enter the ID in the search form below and click the "Extract" button.' );
+        $introHtml .= Html::element( 'li', [], 'Find the Place URL or ID (located in the URL of any Roblox game page) or the Universe ID.' );
+        $introHtml .= Html::element( 'li', [], 'Enter the URL or ID in the search form below and click the "Extract" button.' );
         $introHtml .= Html::element( 'li', [], 'Preview and download the original, uncompressed webp images directly to your device.' );
         $introHtml .= Html::closeElement( 'ul' );
         $introHtml .= Html::closeElement( 'div' );
@@ -60,7 +60,7 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
         $form .= Html::openElement( 'div', [ 'class' => 'roblox-extractor-input-group' ] );
         $form .= Html::element( 'label', [ 'for' => 'placeid' ], $this->msg( 'robloxplacemediaextractor-placeid' )->text() );
         // Removed 'required' so they can use either or
-        $form .= Html::input( 'placeid', $placeId, 'text', [ 'id' => 'placeid', 'placeholder' => 'e.g. 1818' ] );
+        $form .= Html::input( 'placeid', $placeId, 'text', [ 'id' => 'placeid', 'placeholder' => 'e.g. https://www.roblox.com/games/1818/...' ] );
         $form .= Html::closeElement( 'div' );
         
         $form .= Html::openElement( 'div', [ 'class' => 'roblox-extractor-input-group' ] );
@@ -81,6 +81,13 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
     private function processExtraction( ?string $placeId, ?string $universeIdInput ): void {
         $out = $this->getOutput();
         
+        // Auto-extract Place ID from URL if provided
+        if ( $placeId && strpos( $placeId, 'roblox.com' ) !== false ) {
+            if ( preg_match( '/roblox\.com\/games\/(\d+)/i', $placeId, $matches ) ) {
+                $placeId = $matches[1];
+            }
+        }
+
         if ( ($placeId && !is_numeric($placeId)) || ($universeIdInput && !is_numeric($universeIdInput)) ) {
             $out->addHTML( Html::errorBox( $this->msg( 'robloxplacemediaextractor-error-invalid-id' )->text() ) );
             return;
@@ -97,7 +104,7 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
             $safeName = "obby_" . $universeId;
         } else {
             // get universe from place ID if applicable
-            $detailsUrl = "https://apis.roblox.com/universes/v1/places/" . urlencode($placeId) . "/universe";
+            $detailsUrl = "https://apis.roblox.com/universes/v1/places/" . urlencode((string)$placeId) . "/universe";
             $req = $httpFactory->create($detailsUrl, ['method' => 'GET'], __METHOD__);
             $status = $req->execute();
 
@@ -108,7 +115,7 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
 
             $details = json_decode($req->getContent(), true);
             if (empty($details) || !isset($details['universeId'])) {
-                $out->addHTML( Html::errorBox( "Invalid response or place not found." ) );
+                $out->addHTML( Html::errorBox( "Invalid response or place not found. If using a URL, ensure it is a direct game link." ) );
                 return;
             }
 
