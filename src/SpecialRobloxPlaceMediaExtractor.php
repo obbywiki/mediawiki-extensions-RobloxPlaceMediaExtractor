@@ -3,7 +3,6 @@
 namespace MediaWiki\Extension\RobloxPlaceMediaExtractor;
 
 use SpecialPage;
-class_alias( MediaWiki\Html\Html::class, 'Html' );
 use MediaWiki\Html\Html;
 use MediaWiki\MediaWikiServices;
 
@@ -13,31 +12,43 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
     }
 
     public function execute( $subPage ) {
+        $out = $this->getOutput();
         $request = $this->getRequest();
         
+        // Load styles as early as possible
+        $out->addModuleStyles( [ 'ext.RobloxPlaceMediaExtractor.styles' ] );
+
         if ( $request->getVal('dl_url') && $request->getVal('dl_name') ) {
             $this->handleProxyDownload( $request->getVal('dl_url'), $request->getVal('dl_name') );
             return;
         }
 
-        if ( strtolower( $this->getSkin()->getSkinName() ) !== 'citizen' ) {
+        $skinName = strtolower( $this->getSkin()->getSkinName() );
+        if ( $skinName !== 'citizen' ) {
             $this->setHeaders();
-            $this->outputHeader();
             $this->getOutput()->setPageTitle( "Skin Not Supported" );
-            $this->getOutput()->addHTML( Html::errorBox( "This special page can only be used on the Citizen skin." ) );
+            $this->getOutput()->addHTML( Html::errorBox( "This special page is optimized for the Citizen skin. Current skin: " . $skinName ) );
+            // We still allow it but show a warning? No, let's keep it restricted if that's what user wanted, but be more informative.
             return;
         }
 
         $this->setHeaders();
         $this->outputHeader();
 
-        $out = $this->getOutput();
-        $placeId = $request->getVal( 'placeid' );
-
-        $out->addModules( 'ext.RobloxPlaceMediaExtractor.styles' );
-
         $placeId = $request->getVal( 'placeid' );
         $universeIdInput = $request->getVal( 'universeid' );
+
+        $introHtml = Html::openElement( 'div', [ 'class' => 'roblox-extractor-seo-content' ] );
+        $introHtml .= Html::element( 'h2', [], 'How to Use the Roblox Media Extractor' );
+        $introHtml .= Html::element( 'p', [], 'The Roblox Place Media Extractor allows you to quickly and consistently download high-resolution game icons and thumbnails directly from a Roblox place or universe. This tool is ideal for archiving game assets, analyzing high-quality Roblox imagery, or building wiki documentation. This tool was designed for the Obby Wiki.' );
+        $introHtml .= Html::openElement( 'ul' );
+        $introHtml .= Html::element( 'li', [], 'Find the Place ID (located in the URL of any Roblox game page) or the Universe ID.' );
+        $introHtml .= Html::element( 'li', [], 'Enter the ID in the search form below and click the "Extract" button.' );
+        $introHtml .= Html::element( 'li', [], 'Preview and download the original, uncompressed webp images directly to your device.' );
+        $introHtml .= Html::closeElement( 'ul' );
+        $introHtml .= Html::closeElement( 'div' );
+
+        $out->addHTML( $introHtml );
 
         $form = Html::openElement( 'form', [
             'method' => 'get',
@@ -166,7 +177,7 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
             $out->addHTML( Html::element('h4', [], "Game Icon") );
             $html = "<div class='roblox-extractor-results'>";
             $fn = "{$safeName}_icon.webp"; // webps when available
-            $html .= $this->createMediaCard($iconData, $fn, "Icon");
+            $html .= $this->createMediaCard($iconData, $fn, "Icon", "512x512");
             $html .= "</div>";
             $out->addHTML( $html );
         }
@@ -177,7 +188,7 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
             foreach ($thumbs as $idx => $url) {
                 $num = $idx + 1;
                 $fn = "{$safeName}_thumb_{$num}.webp"; // webps when available
-                $html .= $this->createMediaCard($url, $fn, "Thumbnail {$num}");
+                $html .= $this->createMediaCard($url, $fn, "Thumbnail {$num}", "768x432");
             }
             $html .= "</div>";
             $out->addHTML( $html );
@@ -188,16 +199,19 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
         }
     }
 
-    private function createMediaCard(string $url, string $filename, string $title): string {
+    private function createMediaCard(string $url, string $filename, string $title, string $dimensions = ""): string {
         $proxyUrl = $this->getPageTitle()->getLocalURL([
             'dl_url' => $url,
             'dl_name' => $filename
         ]);
 
-        // TODO refactor html generation for efficiency
-
         $html = "<div class='roblox-extractor-card'>";
+        $html .= "<div class='roblox-extractor-card-header'>";
         $html .= "<h4>" . htmlspecialchars($title) . "</h4>";
+        if ($dimensions) {
+            $html .= "<span class='roblox-extractor-dimensions'>" . htmlspecialchars($dimensions) . "</span>";
+        }
+        $html .= "</div>";
         $html .= "<img src='" . htmlspecialchars($url) . "' alt=''/>";
         $html .= "<div class='roblox-extractor-card-bottom'>";
         $html .= "<span>" . htmlspecialchars($filename) . "</span>";

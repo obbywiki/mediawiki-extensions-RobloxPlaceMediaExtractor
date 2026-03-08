@@ -3,7 +3,7 @@
     "name": "RobloxPlaceMediaExtractor",
     "descriptionmsg": "robloxplacemediaextractor-desc",
     "author": ["[https://obbywiki.com ObbyWiki]"],
-    "version": "0.1.0",
+    "version": "0.2.0",
     "license-name": "MIT",
     "type": "specialpage",
     "requires": {
@@ -25,8 +25,14 @@
     },
     "ResourceModules": {
         "ext.RobloxPlaceMediaExtractor.styles": {
-            "styles": "resources/styles.css",
-            "targets": [ "desktop", "mobile" ]
+            "localBasePath": "resources",
+            "styles": [
+                "styles.css"
+            ],
+            "targets": [
+                "desktop",
+                "mobile"
+            ]
         }
     }
 }
