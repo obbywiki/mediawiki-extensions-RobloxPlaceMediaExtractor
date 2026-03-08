@@ -29,3 +29,4 @@ Extracts Place Universe ID and Name automatically, then retrieves Game Icon and 
 * Add support for using the place name instead of the universe ID
 * Add support for different icon/thumbnail sizes
 * Use article path instead of defaulting to index.php?title=etc
+* Add field to change obby_<universe> to custom name in interface
