@@ -1,0 +1,32 @@
+{
+	"manifest_version": 2,
+    "name": "RobloxPlaceMediaExtractor",
+    "descriptionmsg": "robloxplacemediaextractor-desc",
+    "author": ["[https://obbywiki.com ObbyWiki]"],
+    "version": "0.1.0",
+    "license-name": "MIT",
+    "type": "specialpage",
+    "requires": {
+        "MediaWiki": ">=1.43.0"
+    },
+    "AutoloadClasses": {
+        "MediaWiki\\Extension\\RobloxPlaceMediaExtractor\\SpecialRobloxPlaceMediaExtractor": "src/SpecialRobloxPlaceMediaExtractor.php"
+    },
+    "MessagesDirs": {
+        "RobloxPlaceMediaExtractor": [
+            "i18n"
+        ]
+    },
+    "ExtensionMessagesFiles": {
+        "RobloxPlaceMediaExtractorAlias": "src/RobloxPlaceMediaExtractor.alias.php"
+    },
+    "SpecialPages": {
+        "RobloxPlaceMediaExtractor": "MediaWiki\\Extension\\RobloxPlaceMediaExtractor\\SpecialRobloxPlaceMediaExtractor"
+    },
+    "ResourceModules": {
+        "ext.RobloxPlaceMediaExtractor.styles": {
+            "styles": "resources/styles.css",
+            "targets": [ "desktop", "mobile" ]
+        }
+    }
+}

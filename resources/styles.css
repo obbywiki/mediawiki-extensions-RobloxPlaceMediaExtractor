@@ -1,0 +1,84 @@
+.roblox-extractor-form {
+    margin: var(--space-md, 20px) 0;
+    padding: var(--space-md, 15px);
+    border: 1px solid var(--border-color-base, #ccc);
+    background: var(--background-color-base, var(--color-surface-1, #f9f9f9));
+    border-radius: var(--border-radius-base, 8px);
+}
+
+.roblox-extractor-input-group {
+    margin-bottom: var(--space-sm, 10px);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.roblox-extractor-input-group label {
+    font-weight: bold;
+    color: var(--color-base, inherit);
+}
+
+.roblox-extractor-input-group input[type="text"] {
+    padding: 8px 12px;
+    border: 1px solid var(--border-color-base, #ccc);
+    border-radius: var(--border-radius-base, 4px);
+    background: var(--background-color-base, #fff);
+    color: var(--color-base, inherit);
+}
+
+.roblox-extractor-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-md, 15px);
+    margin-bottom: var(--space-lg, 30px);
+}
+
+.roblox-extractor-card {
+    border: 1px solid var(--border-color-base, #ddd);
+    padding: var(--space-md, 15px);
+    border-radius: var(--border-radius-base, 8px);
+    background: var(--background-color-base, var(--color-surface-1, #fff));
+    text-align: center;
+    box-shadow: var(--box-shadow-base, 0 2px 4px rgba(0,0,0,0.1));
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.roblox-extractor-card h4 {
+    margin-top: 0;
+    font-size: 1.1em;
+}
+
+.roblox-extractor-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius-base, 4px);
+    display: block;
+    margin: 0 auto 15px auto;
+    object-fit: contain;
+    background: var(--background-color-quiet, #f0f0f0);
+}
+
+.roblox-extractor-card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    gap: 10px;
+}
+
+.roblox-extractor-card-bottom span {
+    font-size: 0.85em;
+    color: var(--color-subtle, #54595d);
+    word-break: break-all;
+    text-align: left;
+}
+
+.roblox-extractor-card a.mw-ui-button {
+    width: auto;
+    white-space: nowrap;
+    box-sizing: border-box;
+    border-radius: var(--border-radius-base, 4px);
+    font-weight: bold;
+}

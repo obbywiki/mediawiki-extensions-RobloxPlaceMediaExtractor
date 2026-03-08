@@ -1,0 +1,14 @@
+{
+    "@metadata": {
+        "authors": [
+            "[https://obbywiki.com ObbyWiki]"
+        ]
+    },
+    "robloxplacemediaextractor": "Roblox Place Media Extractor",
+    "robloxplacemediaextractor-desc": "Extracts thumbnails and icons from a given Roblox place ID for download.",
+    "robloxplacemediaextractor-placeid": "Roblox Place ID:",
+    "robloxplacemediaextractor-universeid": "Roblox Universe ID:",
+    "robloxplacemediaextractor-submit": "Extract Media",
+    "robloxplacemediaextractor-error-invalid-id": "Invalid Place ID or Universe ID provided. You must provide one.",
+    "robloxplacemediaextractor-error-api": "Failed to fetch data from Roblox API."
+}
