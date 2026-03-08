@@ -6,6 +6,7 @@
     "version": "0.2.0",
     "license-name": "MIT",
     "type": "specialpage",
+	"url": "https://github.com/obbywiki/mediawiki-extensions-RobloxPlaceMediaExtractor",
     "requires": {
         "MediaWiki": ">=1.43.0"
     },
