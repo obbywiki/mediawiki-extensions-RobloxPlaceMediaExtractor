@@ -35,5 +35,16 @@
                 "mobile"
             ]
         }
+    },
+    "config": {
+        "RobloxPlaceMediaExtractorDownloadPrefix": {
+            "value": "obby_"
+        },
+        "RobloxPlaceMediaExtractorDefaultIconSize": {
+            "value": "256x256"
+        },
+        "RobloxPlaceMediaExtractorDefaultThumbnailSize": {
+            "value": "768x432"
+        }
     }
 }

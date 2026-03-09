@@ -9,6 +9,9 @@
     "robloxplacemediaextractor-placeid": "Roblox Place ID:",
     "robloxplacemediaextractor-universeid": "Roblox Universe ID:",
     "robloxplacemediaextractor-submit": "Extract Media",
+    "robloxplacemediaextractor-customname": "Custom Download Name (Recommended):",
+    "robloxplacemediaextractor-iconsize": "Icon Size:",
+    "robloxplacemediaextractor-thumbsize": "Thumbnail Size:",
     "robloxplacemediaextractor-error-invalid-id": "Invalid Place ID or Universe ID provided. You must provide one.",
     "robloxplacemediaextractor-error-api": "Failed to fetch data from Roblox API."
 }
