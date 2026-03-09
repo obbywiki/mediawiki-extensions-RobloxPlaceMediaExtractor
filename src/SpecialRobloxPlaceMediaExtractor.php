@@ -38,8 +38,9 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
 
         $introHtml = Html::openElement( 'div', [ 'class' => 'roblox-extractor-seo-content' ] );
         $introHtml .= Html::element( 'h2', [], 'How to Use the Roblox Media Extractor' );
-        $introHtml .= Html::element( 'p', [], 'The Roblox Place Media Extractor allows you to quickly and consistently download high-resolution game icons and thumbnails directly from a Roblox place or universe. This tool is ideal for archiving game assets, analyzing Roblox thumbnails and imagery, or building wiki documentation. This tool was designed for the' );
+        $introHtml .= Html::openElement( 'p', [], 'The Roblox Place Media Extractor allows you to quickly and consistently download high-resolution game icons and thumbnails directly from a Roblox place or universe. This tool is ideal for archiving game assets, analyzing Roblox thumbnails and imagery, or building wiki documentation. This tool was designed for the ' );
         $introHtml .= Html::element( 'a', [ 'href' => 'https://obbywiki.com/wiki/Home' ], 'Obby Wiki.' );
+        $introHtml .= Html::closeElement( 'p' );
         $introHtml .= Html::openElement( 'ul' );
         $introHtml .= Html::element( 'li', [], 'Find the Place URL or ID (located in the URL of any Roblox game page) or the Universe ID.' );
         $introHtml .= Html::element( 'li', [], 'Enter the URL or ID in the search form below and click the "Extract" button.' );
