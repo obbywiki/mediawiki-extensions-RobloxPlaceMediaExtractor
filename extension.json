@@ -30,8 +30,18 @@
             "styles": [
                 "styles.css"
             ],
+            "targets": [
+                "desktop",
+                "mobile"
+            ]
+        },
+        "ext.RobloxPlaceMediaExtractor.script": {
+            "localBasePath": "resources",
             "scripts": [
                 "script.js"
+            ],
+            "dependencies": [
+                "ext.RobloxPlaceMediaExtractor.styles"
             ],
             "targets": [
                 "desktop",

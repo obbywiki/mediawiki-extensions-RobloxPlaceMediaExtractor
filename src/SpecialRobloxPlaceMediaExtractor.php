@@ -16,7 +16,7 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
         $request = $this->getRequest();
         
         $out->addModuleStyles( [ 'ext.RobloxPlaceMediaExtractor.styles' ] );
-        $out->addModules( [ 'ext.RobloxPlaceMediaExtractor.styles' ] );
+        $out->addModules( [ 'ext.RobloxPlaceMediaExtractor.script' ] );
 
         if ( $request->getVal('dl_url') && $request->getVal('dl_name') ) {
             $this->handleProxyDownload( $request->getVal('dl_url'), $request->getVal('dl_name') );
@@ -237,21 +237,36 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
         $out->addHTML( Html::element('p', [], "Universe ID: " . $universeId) );
 
         if ($iconData) {
-            $out->addHTML( Html::element('h4', [], "Game Icon") );
+            $headerHtml = Html::openElement('div', ['class' => 'roblox-extractor-section-header']);
+            $headerHtml .= Html::element('h4', [], "Game Icon");
+            $headerHtml .= Html::closeElement('div');
+            $out->addHTML($headerHtml);
+
             $html = "<div class='roblox-extractor-results'>";
             $fn = "{$safeName}_icon_1.webp"; // webps when available
-            $html .= $this->createMediaCard($iconData, $fn, "Icon", $iconSize);
+            $html .= $this->createMediaCard($iconData, $fn, "Icon", $iconSize, 'roblox-extractor-thumb-download');
             $html .= "</div>";
             $out->addHTML( $html );
         }
         
         if (!empty($thumbs)) {
-            $out->addHTML( Html::element('h4', [], "Thumbnails") );
-            $html = "<div class='roblox-extractor-results'>";
+            $headerHtml = Html::openElement('div', ['class' => 'roblox-extractor-section-header']);
+            $headerHtml .= Html::element('h4', [], "Thumbnails");
+            $totalMediaCount = count($thumbs) + ($iconData ? 1 : 0);
+            if ($totalMediaCount > 1) {
+                $headerHtml .= Html::element('button', [
+                    'class' => 'mw-ui-button mw-ui-progressive roblox-extractor-download-all',
+                    'id' => 'roblox-extractor-download-all'
+                ], $this->msg('robloxplacemediaextractor-download-all')->text());
+            }
+            $headerHtml .= Html::closeElement('div');
+            $out->addHTML($headerHtml);
+
+            $html = "<div class='roblox-extractor-results roblox-extractor-thumbs-container'>";
             foreach ($thumbs as $idx => $url) {
                 $num = $idx + 1;
                 $fn = "{$safeName}_thumb_{$num}.webp"; // webps when available
-                $html .= $this->createMediaCard($url, $fn, "Thumbnail {$num}", $thumbSize);
+                $html .= $this->createMediaCard($url, $fn, "Thumbnail {$num}", $thumbSize, 'roblox-extractor-thumb-download');
             }
             $html .= "</div>";
             $out->addHTML( $html );
@@ -262,7 +277,7 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
         }
     }
 
-    private function createMediaCard(string $url, string $filename, string $title, string $dimensions = ""): string {
+    private function createMediaCard(string $url, string $filename, string $title, string $dimensions = "", string $extraClass = ""): string {
         $proxyUrl = $this->getPageTitle()->getLocalURL([
             'dl_url' => $url,
             'dl_name' => $filename
@@ -278,7 +293,11 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
         $html .= "<img src='" . htmlspecialchars($url) . "' alt=''/>";
         $html .= "<div class='roblox-extractor-card-bottom'>";
         $html .= "<span>" . htmlspecialchars($filename) . "</span>";
-        $html .= "<a href='" . htmlspecialchars($proxyUrl) . "' class='mw-ui-button mw-ui-progressive' download='" . htmlspecialchars($filename) . "'>Download</a>";
+        $buttonClass = 'mw-ui-button mw-ui-progressive';
+        if ($extraClass) {
+            $buttonClass .= ' ' . $extraClass;
+        }
+        $html .= "<a href='" . htmlspecialchars($proxyUrl) . "' class='" . htmlspecialchars($buttonClass) . "' download='" . htmlspecialchars($filename) . "'>Download</a>";
         $html .= "</div>";
         $html .= "</div>";
         return $html;

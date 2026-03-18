@@ -116,6 +116,27 @@
     font-weight: bold;
 }
 
+.roblox-extractor-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--space-lg, 24px);
+    margin-bottom: var(--space-sm, 12px);
+    padding-bottom: 8px;
+}
+
+.roblox-extractor-section-header h4 {
+    margin: 0;
+    font-size: 1.3em;
+    color: var(--color-base, #202122);
+    font-weight: bold;
+}
+
+.roblox-extractor-download-all {
+    font-weight: 600 !important;
+    font-size: 0.9em !important;
+}
+
 .roblox-extractor-dimensions {
     font-size: 0.8em;
     padding: 2px 6px;

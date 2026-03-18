@@ -17,5 +17,6 @@
     "robloxplacemediaextractor-fetchmode-icon": "Icon Only",
     "robloxplacemediaextractor-fetchmode-thumb": "Thumbnails Only",
     "robloxplacemediaextractor-error-invalid-id": "Invalid Place ID or Universe ID provided. You must provide one.",
-    "robloxplacemediaextractor-error-api": "Failed to fetch data from Roblox API."
+    "robloxplacemediaextractor-error-api": "Failed to fetch data from Roblox API.",
+    "robloxplacemediaextractor-download-all": "Download All Assets"
 }
