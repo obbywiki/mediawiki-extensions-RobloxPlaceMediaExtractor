@@ -16,6 +16,7 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
         $request = $this->getRequest();
         
         $out->addModuleStyles( [ 'ext.RobloxPlaceMediaExtractor.styles' ] );
+        $out->addModules( [ 'ext.RobloxPlaceMediaExtractor.styles' ] );
 
         if ( $request->getVal('dl_url') && $request->getVal('dl_name') ) {
             $this->handleProxyDownload( $request->getVal('dl_url'), $request->getVal('dl_name') );
@@ -75,6 +76,17 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
         $form .= Html::openElement( 'div', [ 'class' => 'roblox-extractor-input-row' ] );
         
         $form .= Html::openElement( 'div', [ 'class' => 'roblox-extractor-input-group' ] );
+        $form .= Html::element( 'label', [ 'for' => 'fetchmode' ], $this->msg( 'robloxplacemediaextractor-fetchmode' )->text() );
+        $fetchModes = [ 'both', 'icon', 'thumb' ];
+        $fetchMode = $request->getVal( 'fetchmode', 'both' );
+        $fetchModeOptions = '';
+        foreach ( $fetchModes as $fm ) {
+            $fetchModeOptions .= Html::element( 'option', [ 'value' => $fm, 'selected' => $fm === $fetchMode ], $this->msg( "robloxplacemediaextractor-fetchmode-$fm" )->text() );
+        }
+        $form .= Html::rawElement( 'select', [ 'name' => 'fetchmode', 'id' => 'fetchmode' ], $fetchModeOptions );
+        $form .= Html::closeElement( 'div' );
+
+        $form .= Html::openElement( 'div', [ 'class' => 'roblox-extractor-input-group' ] );
         $form .= Html::element( 'label', [ 'for' => 'iconsize' ], $this->msg( 'robloxplacemediaextractor-iconsize' )->text() );
         $iconSizes = [ '512x512', '256x256', '150x150', '128x128' ];
         $iconSize = $request->getVal( 'iconsize', MediaWikiServices::getInstance()->getMainConfig()->get( 'RobloxPlaceMediaExtractorDefaultIconSize' ) );
@@ -104,11 +116,11 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
         $out->addHTML( $form );
 
         if ( $placeId || $universeIdInput ) {
-            $this->processExtraction( $placeId, $universeIdInput );
+            $this->processExtraction( $placeId, $universeIdInput, $fetchMode );
         }
     }
 
-    private function processExtraction( ?string $placeId, ?string $universeIdInput ): void {
+    private function processExtraction( ?string $placeId, ?string $universeIdInput, string $fetchMode = 'both' ): void {
         $out = $this->getOutput();
         
         // Auto-extract Place ID from URL if provided
@@ -127,6 +139,8 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
 
         $universeId = null;
         $rawGameName = "";
+        $iconData = '';
+        $thumbs = [];
         
         if ( $universeIdInput ) {
             $universeId = $universeIdInput;
@@ -165,51 +179,53 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
         }
 
         // icon (prioritize webp)
-        $iconUrl = "https://thumbnails.roblox.com/v1/games/icons?universeIds=" . urlencode((string)$universeId) . "&returnPolicy=PlaceHolder&size=" . urlencode((string)$iconSize) . "&format=webp&isCircular=false";
-        $reqIcon = $httpFactory->create($iconUrl, ['method' => 'GET'], __METHOD__);
-        $statusIcon = $reqIcon->execute();
-        $iconData = '';
-        if ($statusIcon->isOK()) {
-            $resp = json_decode($reqIcon->getContent(), true);
-            if (!empty($resp['data'][0]['imageUrl'])) {
-                $iconData = $resp['data'][0]['imageUrl'];
+        if ( $fetchMode === 'both' || $fetchMode === 'icon' ) {
+            $iconUrl = "https://thumbnails.roblox.com/v1/games/icons?universeIds=" . urlencode((string)$universeId) . "&returnPolicy=PlaceHolder&size=" . urlencode((string)$iconSize) . "&format=webp&isCircular=false";
+            $reqIcon = $httpFactory->create($iconUrl, ['method' => 'GET'], __METHOD__);
+            $statusIcon = $reqIcon->execute();
+            if ($statusIcon->isOK()) {
+                $resp = json_decode($reqIcon->getContent(), true);
+                if (!empty($resp['data'][0]['imageUrl'])) {
+                    $iconData = $resp['data'][0]['imageUrl'];
+                }
             }
         }
 
         // get thumbnail IDs then thumbnails
-        $mediaUrl = "https://games.roblox.com/v2/games/" . urlencode((string)$universeId) . "/media?fetchAllExperienceRelatedMedia=false";
-        $reqMedia = $httpFactory->create($mediaUrl, ['method' => 'GET'], __METHOD__);
-        $statusMedia = $reqMedia->execute();
-        $thumbs = [];
-        if ($statusMedia->isOK()) {
-            $mediaResp = json_decode($reqMedia->getContent(), true, 512, JSON_BIGINT_AS_STRING);
-            $imageIds = [];
-            if (!empty($mediaResp['data'])) {
-                foreach ($mediaResp['data'] as $mediaItem) {
-                    if (
-                        isset($mediaItem['assetType']) && $mediaItem['assetType'] === 'Image' &&
-                        isset($mediaItem['imageId']) &&
-                        isset($mediaItem['assetTypeId']) && ($mediaItem['assetTypeId'] === 1 || $mediaItem['assetTypeId'] === '1') &&
-                        isset($mediaItem['approved']) && $mediaItem['approved'] === true
-                    ) {
-                        $imageIds[] = $mediaItem['imageId'];
+        if ( $fetchMode === 'both' || $fetchMode === 'thumb' ) {
+            $mediaUrl = "https://games.roblox.com/v2/games/" . urlencode((string)$universeId) . "/media?fetchAllExperienceRelatedMedia=false";
+            $reqMedia = $httpFactory->create($mediaUrl, ['method' => 'GET'], __METHOD__);
+            $statusMedia = $reqMedia->execute();
+            if ($statusMedia->isOK()) {
+                $mediaResp = json_decode($reqMedia->getContent(), true, 512, JSON_BIGINT_AS_STRING);
+                $imageIds = [];
+                if (!empty($mediaResp['data'])) {
+                    foreach ($mediaResp['data'] as $mediaItem) {
+                        if (
+                            isset($mediaItem['assetType']) && $mediaItem['assetType'] === 'Image' &&
+                            isset($mediaItem['imageId']) &&
+                            isset($mediaItem['assetTypeId']) && ($mediaItem['assetTypeId'] === 1 || $mediaItem['assetTypeId'] === '1') &&
+                            isset($mediaItem['approved']) && $mediaItem['approved'] === true
+                        ) {
+                            $imageIds[] = $mediaItem['imageId'];
+                        }
                     }
                 }
-            }
 
-            if (!empty($imageIds)) {
-                $thumbIdsStr = implode(',', $imageIds);
-                // get thumbnails
-                $thumbUrl = "https://thumbnails.roblox.com/v1/games/" . urlencode((string)$universeId) . "/thumbnails?thumbnailIds=" . urlencode($thumbIdsStr) . "&size=" . urlencode((string)$thumbSize) . "&format=Webp&isCircular=false";
-                
-                $reqThumb = $httpFactory->create($thumbUrl, ['method' => 'GET'], __METHOD__);
-                $statusThumb = $reqThumb->execute();
-                if ($statusThumb->isOK()) {
-                    $thumbResp = json_decode($reqThumb->getContent(), true);
-                    if (!empty($thumbResp['data'])) {
-                        foreach ($thumbResp['data'] as $thumb) {
-                            if (isset($thumb['state']) && $thumb['state'] === 'Completed' && !empty($thumb['imageUrl'])) {
-                                $thumbs[] = $thumb['imageUrl'];
+                if (!empty($imageIds)) {
+                    $thumbIdsStr = implode(',', $imageIds);
+                    // get thumbnails
+                    $thumbUrl = "https://thumbnails.roblox.com/v1/games/" . urlencode((string)$universeId) . "/thumbnails?thumbnailIds=" . urlencode($thumbIdsStr) . "&size=" . urlencode((string)$thumbSize) . "&format=Webp&isCircular=false";
+                    
+                    $reqThumb = $httpFactory->create($thumbUrl, ['method' => 'GET'], __METHOD__);
+                    $statusThumb = $reqThumb->execute();
+                    if ($statusThumb->isOK()) {
+                        $thumbResp = json_decode($reqThumb->getContent(), true);
+                        if (!empty($thumbResp['data'])) {
+                            foreach ($thumbResp['data'] as $thumb) {
+                                if (isset($thumb['state']) && $thumb['state'] === 'Completed' && !empty($thumb['imageUrl'])) {
+                                    $thumbs[] = $thumb['imageUrl'];
+                                }
                             }
                         }
                     }

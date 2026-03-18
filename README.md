@@ -27,4 +27,3 @@ Extracts Place Universe ID and Name automatically, then retrieves Game Icon and 
 * Add support for downloading multiple thumbnails at once
 * Add support for using the place name instead of the universe ID automatically
 * Add support to upload files directly with preset descriptions, copyright, etc.
-* Add support for only fetching the icon or the thumbnails
