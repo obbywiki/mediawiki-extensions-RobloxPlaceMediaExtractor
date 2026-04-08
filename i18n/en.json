@@ -5,7 +5,7 @@
         ]
     },
     "robloxplacemediaextractor": "Roblox Place Media Extractor",
-    "robloxplacemediaextractor-desc": "Extracts thumbnails and icons from a given Roblox place ID for download.",
+    "robloxplacemediaextractor-desc": "[[Special:RobloxPlaceMediaExtractor|Extract thumbnails and icons]] from a given Roblox place ID for download.",
     "robloxplacemediaextractor-placeid": "Roblox Place ID:",
     "robloxplacemediaextractor-universeid": "Roblox Universe ID:",
     "robloxplacemediaextractor-submit": "Extract Media",
