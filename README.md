@@ -1,5 +1,8 @@
 # RobloxPlaceMediaExtractor
 
+> [!NOTE]
+> This extension is unmaintained as it has been rendered obsolete after the release of the OWAF extension: https://forum.wou.gg/t/introducing-our-new-article-flow-how-to-easily-create-an-obby-article-on-the-obby-wiki/96
+
 A MediaWiki extension that creates a special page to extract and download thumbnails and icons from a given Roblox Place ID. Specifically developed to be used on the Obby Wiki to reduce thumbnail archival times.
 
 Extracts Place Universe ID and Name automatically, then retrieves Game Icon and all Thumbnails in WebP format. Name formatting is as follows: `obby_{universe_id}_icon_1.webp` and `obby_{universe_id}_thumb_1.webp`.
