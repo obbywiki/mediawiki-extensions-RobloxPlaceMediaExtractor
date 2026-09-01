@@ -1,7 +1,12 @@
 # RobloxPlaceMediaExtractor
 
 > [!NOTE]
-> This extension is unmaintained as it has been rendered obsolete after the release of the OWAF extension: https://obby.wiki/Blog:Create_an_obby_article_easily
+> This extension is unmaintained as it has been rendered obsolete after the release of the OWAF extension: https://obby.wiki/Blog:Create_an_obby_article_easily.
+>
+> If this extension breaks, it will not be fixed.
+
+> [!WARNING]
+> This extension is outdated and does not meet Obby Wiki standards. 
 
 A MediaWiki extension that creates a special page to extract and download thumbnails and icons from a given Roblox Place ID. Specifically developed to be used on the Obby Wiki to reduce thumbnail archival times.
 
