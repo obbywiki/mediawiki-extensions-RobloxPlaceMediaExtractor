@@ -1,9 +1,9 @@
 .roblox-extractor-form {
-    margin: var(--space-md, 20px) 0;
-    padding: var(--space-xl, 30px);
-    border: 1px solid var(--border-color-base, #ccc);
-    background: var(--background-color-base, var(--color-surface-1, #f9f9f9));
-    border-radius: var(--border-radius-large, 12px);
+    margin: 20px 0;
+    padding: 30px;
+    border: 1px solid var(--border-color-base);
+    background: var(--background-color-base, var(--color-surface-1));
+    border-radius: var(--border-radius-large);
     box-shadow: var(--box-shadow-base, 0 4px 12px rgba(0,0,0,0.05));
     transition: box-shadow 0.2s ease-in-out;
 }
@@ -16,15 +16,6 @@
     margin-bottom: var(--space-lg, 24px);
     line-height: 1.6;
     color: var(--color-base, #333);
-}
-
-.roblox-extractor-seo-content h2 {
-    font-size: 1.5em;
-    margin-top: 0;
-    margin-bottom: var(--space-sm, 12px);
-    border-bottom: 2px solid var(--color-primary, #36c);
-    padding-bottom: 4px;
-    display: inline-block;
 }
 
 .roblox-extractor-input-group {
@@ -179,8 +170,16 @@
     width: auto;
     white-space: nowrap;
     box-sizing: border-box;
-    border-radius: var(--border-radius-base, 6px);
+    border-radius: var(--border-radius-base);
     font-weight: 600;
     padding: 8px 16px;
     transition: background-color 0.2s ease;
+}
+
+
+.extract-button {
+    width: 100% !important;
+    background-color: var(--background-color-progressive) !important;
+    border: 0 !important;
+    color: #fff !important;
 }

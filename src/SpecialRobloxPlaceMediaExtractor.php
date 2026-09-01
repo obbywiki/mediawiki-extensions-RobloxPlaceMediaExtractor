@@ -31,8 +31,13 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
 
         $introHtml = Html::openElement( 'div', [ 'class' => 'roblox-extractor-seo-content' ] );
         $introHtml .= Html::openElement( 'p' );
+        $introHtml .= Html::element( 'span', [ ], 'This tool is archived and obsolete. Consider using the ' );
+        $introHtml .= Html::element( 'a', [ 'href' => '#', 'class' => ['owaf-new-article-trigger'] ], 'Article Flow modal ' );
+        $introHtml .= Html::element( 'span', [ ], ' instead.' );
+        $introHtml .= Html::element( 'br', [ ], '' );
+        $introHtml .= Html::element( 'br', [ ], '' );
         $introHtml .= Html::element( 'span', [ ], 'The Roblox Place Media Extractor allows you to quickly and consistently download high-resolution game icons and thumbnails directly from a Roblox place or universe. This tool is ideal for archiving game assets, analyzing Roblox thumbnails and imagery, or building wiki documentation. This tool was designed for the ' );
-        $introHtml .= Html::element( 'a', [ 'href' => 'https://obbywiki.com/wiki/Home' ], 'Obby Wiki.' );
+        $introHtml .= Html::element( 'a', [ 'href' => 'https://obby.wiki' ], 'Obby Wiki.' );
         $introHtml .= Html::closeElement( 'p' );
         $introHtml .= Html::openElement( 'ul' );
         $introHtml .= Html::element( 'li', [], 'Find the Place URL or ID (located in the URL of any Roblox game page) or the Universe ID.' );
@@ -71,9 +76,11 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
         $fetchModes = [ 'both', 'icon', 'thumb' ];
         $fetchMode = $request->getVal( 'fetchmode', 'both' );
         $fetchModeOptions = '';
+
         foreach ( $fetchModes as $fm ) {
             $fetchModeOptions .= Html::element( 'option', [ 'value' => $fm, 'selected' => $fm === $fetchMode ], $this->msg( "robloxplacemediaextractor-fetchmode-$fm" )->text() );
         }
+
         $form .= Html::rawElement( 'select', [ 'name' => 'fetchmode', 'id' => 'fetchmode' ], $fetchModeOptions );
         $form .= Html::closeElement( 'div' );
 
@@ -82,9 +89,11 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
         $iconSizes = [ '512x512', '256x256', '150x150', '128x128' ];
         $iconSize = $request->getVal( 'iconsize', MediaWikiServices::getInstance()->getMainConfig()->get( 'RobloxPlaceMediaExtractorDefaultIconSize' ) );
         $iconSizeOptions = '';
+
         foreach ( $iconSizes as $s ) {
             $iconSizeOptions .= Html::element( 'option', [ 'value' => $s, 'selected' => $s === $iconSize ], $s );
         }
+
         $form .= Html::rawElement( 'select', [ 'name' => 'iconsize', 'id' => 'iconsize' ], $iconSizeOptions );
         $form .= Html::closeElement( 'div' );
 
@@ -93,15 +102,17 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
         $thumbSizes = [ '768x432', '576x324', '480x270', '320x180' ];
         $thumbSize = $request->getVal( 'thumbsize', MediaWikiServices::getInstance()->getMainConfig()->get( 'RobloxPlaceMediaExtractorDefaultThumbnailSize' ) );
         $thumbSizeOptions = '';
+
         foreach ( $thumbSizes as $s ) {
             $thumbSizeOptions .= Html::element( 'option', [ 'value' => $s, 'selected' => $s === $thumbSize ], $s );
         }
+        
         $form .= Html::rawElement( 'select', [ 'name' => 'thumbsize', 'id' => 'thumbsize' ], $thumbSizeOptions );
         $form .= Html::closeElement( 'div' );
 
         $form .= Html::closeElement( 'div' );
         
-        $form .= Html::input( 'wpExtract', $this->msg( 'robloxplacemediaextractor-submit' )->text(), 'submit', [ 'class' => 'mw-ui-button mw-ui-progressive' ] );
+        $form .= Html::input( 'wpExtract', $this->msg( 'robloxplacemediaextractor-submit' )->text(), 'submit', [ 'class' => 'mw-ui-button mw-ui-progressive extract-button' ] );
         $form .= Html::closeElement( 'form' );
 
         $out->addHTML( $form );
