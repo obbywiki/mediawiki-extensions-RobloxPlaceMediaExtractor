@@ -179,6 +179,7 @@
 
 .extract-button {
     width: 100% !important;
+    max-width: none !important;
     background-color: var(--background-color-progressive) !important;
     border: 0 !important;
     color: #fff !important;
