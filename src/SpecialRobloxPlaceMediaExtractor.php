@@ -23,14 +23,6 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
             return;
         }
 
-        $skinName = strtolower( $this->getSkin()->getSkinName() );
-        if ( $skinName !== 'citizen' ) {
-            $this->setHeaders();
-            $this->getOutput()->setPageTitle( "Skin Not Supported" );
-            $this->getOutput()->addHTML( Html::errorBox( "This special page is optimized for the Citizen skin. Current skin: " . $skinName . " Please switch to the Citizen skin in user preferences or by appending ?usekin=Citizen to the URL." ) );
-            return;
-        }
-
         $this->setHeaders();
         $this->outputHeader();
 
@@ -38,7 +30,6 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
         $universeIdInput = $request->getVal( 'universeid' );
 
         $introHtml = Html::openElement( 'div', [ 'class' => 'roblox-extractor-seo-content' ] );
-        $introHtml .= Html::element( 'h2', [], 'How to Use the Roblox Media Extractor' );
         $introHtml .= Html::openElement( 'p' );
         $introHtml .= Html::element( 'span', [ ], 'The Roblox Place Media Extractor allows you to quickly and consistently download high-resolution game icons and thumbnails directly from a Roblox place or universe. This tool is ideal for archiving game assets, analyzing Roblox thumbnails and imagery, or building wiki documentation. This tool was designed for the ' );
         $introHtml .= Html::element( 'a', [ 'href' => 'https://obbywiki.com/wiki/Home' ], 'Obby Wiki.' );
