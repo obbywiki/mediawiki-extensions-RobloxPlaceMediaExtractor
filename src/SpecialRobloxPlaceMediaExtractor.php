@@ -33,7 +33,7 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
         $introHtml .= Html::openElement( 'p' );
         $introHtml .= Html::element( 'span', [ ], 'This tool is archived and obsolete. Consider using the ' );
         $introHtml .= Html::element( 'a', [ 'href' => '#', 'class' => ['owaf-new-article-trigger'] ], 'Article Flow modal ' );
-        $introHtml .= Html::element( 'span', [ ], ' instead.' );
+        $introHtml .= Html::element( 'span', [ ], ' instead. If this tool breaks, it will not be fixed.' );
         $introHtml .= Html::element( 'br', [ ], '' );
         $introHtml .= Html::element( 'br', [ ], '' );
         $introHtml .= Html::element( 'span', [ ], 'The Roblox Place Media Extractor allows you to quickly and consistently download high-resolution game icons and thumbnails directly from a Roblox place or universe. This tool is ideal for archiving game assets, analyzing Roblox thumbnails and imagery, or building wiki documentation. This tool was designed for the ' );
@@ -106,7 +106,7 @@ class SpecialRobloxPlaceMediaExtractor extends SpecialPage {
         foreach ( $thumbSizes as $s ) {
             $thumbSizeOptions .= Html::element( 'option', [ 'value' => $s, 'selected' => $s === $thumbSize ], $s );
         }
-        
+
         $form .= Html::rawElement( 'select', [ 'name' => 'thumbsize', 'id' => 'thumbsize' ], $thumbSizeOptions );
         $form .= Html::closeElement( 'div' );
 
