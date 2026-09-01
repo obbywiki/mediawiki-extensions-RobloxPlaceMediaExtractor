@@ -3,7 +3,7 @@
 > [!NOTE]
 > This extension is unmaintained as it has been rendered obsolete after the release of the OWAF extension: https://obby.wiki/Blog:Create_an_obby_article_easily.
 >
-> If this extension breaks, it will not be fixed.
+> If this extension breaks, it will not be fixed. Its final release is v0.4.0.
 
 > [!WARNING]
 > This extension is outdated and does not meet Obby Wiki standards. 
