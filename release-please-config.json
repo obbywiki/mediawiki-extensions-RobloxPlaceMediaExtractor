@@ -5,7 +5,6 @@
     "packages": {
         ".": {
             "release-type": "simple",
-            "prerelease": true,
             "package-name": "roblox-place-media-extractor",
             "extra-files": [
                 "extension.json"
