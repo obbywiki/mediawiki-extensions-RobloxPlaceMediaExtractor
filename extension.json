@@ -1,12 +1,14 @@
 {
-	"manifest_version": 2,
+    "manifest_version": 2,
     "name": "RobloxPlaceMediaExtractor",
     "descriptionmsg": "robloxplacemediaextractor-desc",
-    "author": ["[https://obby.wiki The Obby Wiki]"],
-    "version": "0.3.0",
+    "author": [
+        "[https://obby.wiki The Obby Wiki]"
+    ],
+    "version": "0.4.0",
     "license-name": "MIT",
     "type": "specialpage",
-	"url": "https://github.com/obbywiki/mediawiki-extensions-RobloxPlaceMediaExtractor",
+    "url": "https://github.com/obbywiki/mediawiki-extensions-RobloxPlaceMediaExtractor",
     "requires": {
         "MediaWiki": ">=1.43.0"
     },
