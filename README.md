@@ -1,7 +1,7 @@
 # RobloxPlaceMediaExtractor
 
 > [!NOTE]
-> This extension is unmaintained as it has been rendered obsolete after the release of the OWAF extension: https://forum.wou.gg/t/introducing-our-new-article-flow-how-to-easily-create-an-obby-article-on-the-obby-wiki/96
+> This extension is unmaintained as it has been rendered obsolete after the release of the OWAF extension: https://obby.wiki/Blog:Create_an_obby_article_easily
 
 A MediaWiki extension that creates a special page to extract and download thumbnails and icons from a given Roblox Place ID. Specifically developed to be used on the Obby Wiki to reduce thumbnail archival times.
 
