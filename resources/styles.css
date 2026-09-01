@@ -2,9 +2,8 @@
     margin: 20px 0;
     padding: 30px;
     border: 1px solid var(--border-color-base);
-    background: var(--background-color-base, var(--color-surface-1));
+    background: var(--background-color-base);
     border-radius: var(--border-radius-large);
-    box-shadow: var(--box-shadow-base, 0 4px 12px rgba(0,0,0,0.05));
     transition: box-shadow 0.2s ease-in-out;
 }
 
@@ -22,7 +21,7 @@
     margin-bottom: var(--space-md, 16px);
     display: flex;
     flex-direction: column;
-    border-radius: var(--border-radius-medium, 12px);
+    border-radius: var(--border-radius-medium);
     gap: 8px;
 }
 
@@ -36,7 +35,7 @@
 .roblox-extractor-input-group select {
     padding: 10px 14px;
     border: 1px solid var(--border-color-base, #a2a9b1);
-    border-radius: var(--border-radius-base, 6px);
+    border-radius: var(--border-radius-base);
     background: var(--background-color-base, #fff);
     color: var(--color-base, inherit);
     font-size: 1em;
@@ -83,7 +82,7 @@
 .roblox-extractor-card {
     border: 1px solid var(--border-color-base, #eaecf0);
     padding: var(--space-md, 16px);
-    border-radius: var(--border-radius-large, 10px);
+    border-radius: var(--border-radius-large);
     background: var(--background-color-base, var(--color-surface-1, #fff));
     text-align: center;
     box-shadow: var(--box-shadow-base, 0 2px 8px rgba(0,0,0,0.06));
@@ -140,7 +139,7 @@
 .roblox-extractor-card img {
     max-width: 100%;
     height: auto;
-    border-radius: var(--border-radius-base, 6px);
+    border-radius: var(--border-radius-base);
     display: block;
     margin: 0 auto 16px auto;
     object-fit: cover;
