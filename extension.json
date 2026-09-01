@@ -2,7 +2,7 @@
 	"manifest_version": 2,
     "name": "RobloxPlaceMediaExtractor",
     "descriptionmsg": "robloxplacemediaextractor-desc",
-    "author": ["[https://obbywiki.com ObbyWiki]"],
+    "author": ["[https://obby.wiki The Obby Wiki]"],
     "version": "0.3.0",
     "license-name": "MIT",
     "type": "specialpage",
